@@ -1,5 +1,26 @@
 # Changelog
 
+## v2.2.0 — decoupled from any one submission
+
+No number changed. The repository had been named and described after a particular manuscript
+title, which meant that every reframing of the paper required a matching edit here, and left the
+published README asserting a claim the manuscript had since narrowed.
+
+- `README.md` retitled *Capture-session evaluation protocol for field image data*. It now describes
+  the dataset and the tooling rather than a paper, and states at the top that the manuscript's
+  title and framing have changed and may change again.
+- The claim in the README that capture structure "cannot be reconstructed from the images" is
+  narrowed to the methods actually tested, matching the manuscript. The stronger wording was
+  a repeat of the fault corrected in v2.1.0 under a different form.
+- Added to the README the point that this work is subject to its own argument: the capture sessions
+  here were reconstructed from filenames rather than recorded, so the measured cost is a lower bound
+  on the cost of omitting a recorded grouping.
+- `CITATION.cff`: title updated, `journal:` field replaced with a note that the venue is not fixed.
+- `paper/` now holds `manuscript.md` and `supplementary_material.md` under neutral filenames, plus a
+  `paper/README.md` listing the five figures that have not changed across any version, so that a
+  reader can tell a stale manuscript from a stale repository.
+
+
 ## v2.1.0 — pre-submission consistency pass
 
 This release changes **no experimental result**. Every number in the paper is unchanged. What

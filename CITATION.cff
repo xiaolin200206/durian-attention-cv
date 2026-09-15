@@ -26,8 +26,8 @@ abstract: >-
   architectures. The repository contains the partitioning utilities
   that avoid that, a script for each of the five protocol decisions
   the accompanying paper measures, and the calibration tooling behind
-  its other result: that the content-based methods in common use do
-  not recover capture structure from released images. On identical
+  its other result: that the content-based methods tested do not
+  recover capture structure from released images. On identical
   simulated image-level partitions, a near-duplicate audit of the kind
   conventionally reported alongside dataset releases flags 4.6% of
   test images where the reference grouping flags 93.9%; the two are
@@ -50,8 +50,8 @@ keywords:
   - reproducibility
   - benchmark
 license: MIT
-version: 2.1.0
-date-released: '2026-09-12'
+version: 2.2.0
+date-released: '2026-09-13'
 references:
   - type: dataset
     title: >-
@@ -69,13 +69,15 @@ references:
 preferred-citation:
   type: article
   title: >-
-    Capture sessions, not images: the sampling unit governs reported
-    accuracy in field image data, and content-based auditing does not
-    recover it
+    Leakage that survives its own audit: capture-session structure in
+    field image data, and what content-based methods fail to recover
   authors:
     - family-names: Lin
       given-names: Ding Shan
       orcid: https://orcid.org/0009-0009-6031-8479
-  journal: Ecological Informatics
+  notes: >-
+    Under review. The venue and the title have changed between
+    submissions; cite the dataset and software entries above, which are
+    stable, and check the repository for the current manuscript status.
   year: 2026
   doi: '10.XXXX/XXXXXX'

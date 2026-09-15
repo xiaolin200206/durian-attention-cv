@@ -1,10 +1,15 @@
-# Capture sessions, not images — durian disease classification
+# Capture-session evaluation protocol for field image data
 
-Code, data and evaluation protocol for *Capture sessions, not images: the sampling unit governs
-reported accuracy in field image data, and content-based auditing does not recover it*
-(submitted to *Ecological Informatics*).
+A durian disease benchmark released **with the sampling-unit identifiers**, together with the
+partitioning utilities, the content-based recoverability audit tooling, and the figure and table
+code behind the accompanying manuscript.
 
 Dataset: https://doi.org/10.5281/zenodo.22177133
+
+The manuscript is under review. Its title and framing have changed between submissions and may
+change again; this repository is deliberately not named after it. `paper/` holds the current
+version, `CHANGELOG.md` records what changed and when, and every number below is a property of the
+data rather than of any particular write-up.
 
 ---
 
@@ -12,9 +17,9 @@ Dataset: https://doi.org/10.5281/zenodo.22177133
 
 Two things, and the second is the reason the first matters.
 
-**1. Content-based auditing does not recover the grouping.** Once a dataset ships without
-sampling-unit identifiers, the structure cannot be reconstructed from the images by the methods in
-common use. A near-duplicate audit flags **4.6%** of test images where the reference grouping flags
+**1. The content-based methods in common use do not recover the grouping.** Once a dataset ships
+without sampling-unit identifiers, the methods ordinarily used to check for that structure do not
+reconstruct it. A near-duplicate audit flags **4.6%** of test images where the reference grouping flags
 **93.9%** — report both, never their ratio, because a proxy that over-merges flags images the
 reference does not, so a ratio can exceed one and does not say which images were missed.
 Self-supervised features (DINOv2) recover more but reach no threshold at which pair precision and
@@ -22,12 +27,16 @@ recall are usable together: the best pair-F1 of any configuration is 0.402, agai
 trivial grouping that merges each class entirely. The threshold calibrated here collapses into a
 degenerate grouping on a second dataset whose preprocessing differs.
 
-We do **not** claim that no method could succeed. We claim that these do not, under single-linkage
-clustering, against a reference grouping that is itself reconstructed — and that a publisher has no
-means of demonstrating, on a dataset released without identifiers, that any other method has,
-because demonstrating it requires the reference grouping whose absence created the problem. The
-measurement moves 5.7 pp across a 2.6-fold change in the reconstruction rule
-(`results/grouping_sensitivity.csv`).
+This is **not** a claim that no method could succeed. It is a claim about the methods tested here,
+under single-linkage clustering, against a reference grouping that is itself reconstructed — and
+about the fact that on a dataset released without identifiers there is no reference grouping to
+check any other method against. The measurement moves 5.7 pp across a 2.6-fold change in the
+reconstruction rule (`results/grouping_sensitivity.csv`).
+
+**The repository is subject to its own argument.** The capture sessions here were reconstructed from
+camera filenames after collection, not recorded at collection, and orchard identity was never
+recorded at all. What the numbers below measure is therefore the cost of omitting a grouping rule
+relative to a *reconstructed* one, which is a lower bound on the cost relative to a *recorded* one.
 
 **2. Splitting at the image level inflates every metric.** The dataset contains 560 field images of
 five durian disease categories, produced in only **73 capture sessions** — bursts of one lesion,
@@ -185,6 +194,8 @@ test.
 | `leak_detection.py` | Per-test-image agreement between the reference grouping and a content-based proxy: how many leaked images the audit finds, and how many it invents. Supports single, complete and average linkage |
 | `grouping_sensitivity.py` | Varies the session-reconstruction rule and reports how far the leakage measurement moves. Needs only `sessions.csv` |
 | `label_conflicts.py` | Flags images carrying more than one class label, and camera sequence numbers appearing under two classes |
+| `check_contamination.py` | Cross-split contamination check on a built partition |
+| `check_provenance.py` | EXIF and filename-provenance survey of the released files |
 
 ### Cross-region
 
@@ -194,7 +205,11 @@ test.
 | `diagnose_mapping.py` | Per-class zero-shot behaviour; detects an invalid class correspondence |
 | `vietnam_indomain.py` | In-domain control on the Vietnamese training split |
 | `make_centrecrop.py` | Matched preprocessing control |
+| `shrink.py` | Produces the 512 px working copies every reported figure is computed on |
 | `malaysia_subset_metrics.py` | Source-side macro over matched class subsets |
+| `fill_table_s1.py` | Assembles Supplementary Table S1 from the audit output |
+| `fix_crop_control.py` | Recomputes the centre-crop control metrics |
+| `fix_robustness.py` | Recomputes the perturbation metrics over an explicit label set |
 
 ### Figures and reporting
 
@@ -214,8 +229,10 @@ test.
 |---|---|
 | `paper/manuscript_EI.md` | Manuscript source as submitted |
 | `paper/supplementary_material.md` | Supplementary material |
+| `results/group_s*`, `results/image_s*` | Per-seed outputs for both partition conditions: per-class metrics, comparison tables, cross-validation, robustness and cross-region results. Tables 6, 7, 9, 10 and 11 and Supplementary Tables S3–S6 aggregate from these |
+| `results/group_s42/confusion_matrix.csv` | The matrix behind Fig. 5, so the figure can be checked without a checkpoint |
 | `results/grouping_sensitivity.csv` | Table S14, reproducible from `sessions.csv` alone |
-| `results/README.md` | Where the per-seed result files live |
+| `results/plantvillage_per_class.csv`, `results/plantvillage_summary.txt` | Table S15 and Sect. S16 |
 | `figures/` | Figs. 1–7, PDF and PNG at 400 dpi |
 | `CHANGELOG.md` | What changed in v2.1.0 and why |
 
