@@ -1,21 +1,8 @@
-# Core
-torch>=2.0
-torchvision>=0.15
-numpy>=1.23
-pandas>=1.5
-scikit-learn>=0.24      # StratifiedGroupKFold
-pillow>=9.0
-
-# Figures
-matplotlib>=3.6
-seaborn>=0.12
-
-# Statistics (McNemar)
-statsmodels>=0.13
-
-# Progress
-tqdm>=4.64
-
-# Optional: only for `extract_features.py --backend timm`.
-# DINOv2 loads through torch.hub and needs no extra package.
-# timm>=0.9
+torch>=2.1
+torchvision>=0.16
+scikit-learn>=1.3
+pandas>=2.0
+numpy>=1.24
+scipy>=1.10
+pillow>=10.0
+matplotlib>=3.7

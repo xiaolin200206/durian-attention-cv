@@ -1,0 +1,82 @@
+{
+ "runs": 200,
+ "factor": 0.383,
+ "summary": {
+  "none_224": {
+   "mean": 75.3,
+   "sd": 11.02,
+   "n": 40
+  },
+  "lfa14_224": {
+   "mean": 73.79,
+   "sd": 11.31,
+   "n": 40
+  },
+  "lfa28_224": {
+   "mean": 72.55,
+   "sd": 11.42,
+   "n": 40
+  },
+  "none_320": {
+   "mean": 77.08,
+   "sd": 11.26,
+   "n": 40
+  },
+  "lfa14_320": {
+   "mean": 75.54,
+   "sd": 12.69,
+   "n": 40
+  }
+ },
+ "paired": {
+  "lfa14_224": {
+   "mean": -1.511,
+   "ci_low": -6.302,
+   "ci_high": 3.28,
+   "p_corrected": 0.517,
+   "wins": 7.0,
+   "losses": 13.0,
+   "p_holm": 1.0,
+   "improvement": false
+  },
+  "lfa28_224": {
+   "mean": -2.754,
+   "ci_low": -8.516,
+   "ci_high": 3.008,
+   "p_corrected": 0.33,
+   "wins": 6.0,
+   "losses": 14.0,
+   "p_holm": 1.0,
+   "improvement": false
+  },
+  "none_320": {
+   "mean": 1.774,
+   "ci_low": -4.329,
+   "ci_high": 7.877,
+   "p_corrected": 0.55,
+   "wins": 15.0,
+   "losses": 5.0,
+   "p_holm": 1.0,
+   "improvement": false
+  },
+  "lfa14_320": {
+   "mean": 0.234,
+   "ci_low": -7.393,
+   "ci_high": 7.861,
+   "p_corrected": 0.95,
+   "wins": 8.0,
+   "losses": 12.0,
+   "p_holm": 1.0,
+   "improvement": false
+  }
+ },
+ "secondary_lfa14_320_vs_none_320": {
+  "mean": -1.54,
+  "ci_low": -8.516,
+  "ci_high": 5.435,
+  "p_corrected": 0.649,
+  "wins": 8.0
+ },
+ "seed_gap_mean": 5.61,
+ "none_main_experiment_mean": 75.06
+}

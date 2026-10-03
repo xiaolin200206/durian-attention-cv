@@ -1,274 +1,65 @@
-# Capture-session evaluation protocol for field image data
+# Lightweight attention for field durian disease classification: grouped, repeated cross-validation
 
-A durian disease benchmark released **with the sampling-unit identifiers**, together with the
-partitioning utilities, the content-based recoverability audit tooling, and the figure and table
-code behind the accompanying manuscript.
+Code and results for the paper *Seed-to-seed variation outweighs lightweight attention gains: a grouped, repeated cross-validation study on field durian disease images* (Lin Ding Shan, submitted to *Pattern Recognition Letters*).
 
-Dataset: https://doi.org/10.5281/zenodo.22177133
+Every number, table and figure in the manuscript is generated from the files in `results/`, not typed: `paper/prl/render_prl.py` fills the manuscript template from `results/numbers.json`, and `paper/prl/verify_prl.py` recomputes every reported quantity independently from the raw per-image predictions and fails, naming the item, on any disagreement (87 checks).
 
-The manuscript is under review. Its title and framing have changed between submissions and may
-change again; this repository is deliberately not named after it. `paper/` holds the current
-version, `CHANGELOG.md` records what changed and when, and every number below is a property of the
-data rather than of any particular write-up.
+The study compares EfficientNet-B0 with and without three attention modules (LFA, a 1,281-parameter spatial gate; squeeze-and-excitation; CBAM) on 550 field images of four durian disease classes. Images are split by capture group (camera-counter bursts), and no group is split between training and test data. Each configuration is trained on 20 folds (4 folds × 5 repeats) with two fixed seeds, and configurations are compared in pairs with the corrected resampled *t*-test of Nadeau and Bengio (2003).
 
----
+**Result in one line:** no module measurably improved the plain network (LFA − none = −0.13 percentage points of macro F1, 95% CI −4.56 to 4.31), while changing only the random seed moved macro F1 by 5.34 points on average. A pre-registered follow-up (200 runs) moved LFA to earlier layers (14 × 14 and 28 × 28 feature maps) and raised the input to 320 px; none of these met the decision rule either (`results/v2/`).
 
-## What this repository is for
+## Data
 
-Two things, and the second is the reason the first matters.
+- Images and capture-session identifiers: Zenodo, https://doi.org/10.5281/zenodo.22177133. Use the full-resolution images in class folders together with `sessions.csv`; the scripts resize them exactly as in the paper.
+- `data/sessions.csv`: class, file name and capture session for each of the 560 images.
+- `data/folds.csv`: the fold assignment used in the paper (`repeat`, `fold`, row index into the 550-image table, `role` = train / val / test). Regenerating it with other versions of scikit-learn or pandas can give a different partition, so this file is the reference.
+- External test: the Vietnamese durian leaf dataset of Nguyen Thanh et al. (2025), *Data in Brief* 61, 111845, available from its authors.
 
-**1. The content-based methods in common use do not recover the grouping.** Once a dataset ships
-without sampling-unit identifiers, the methods ordinarily used to check for that structure do not
-reconstruct it. A near-duplicate audit flags **4.6%** of test images where the reference grouping flags
-**93.9%** — report both, never their ratio, because a proxy that over-merges flags images the
-reference does not, so a ratio can exceed one and does not say which images were missed.
-Self-supervised features (DINOv2) recover more but reach no threshold at which pair precision and
-recall are usable together: the best pair-F1 of any configuration is 0.402, against 0.298 for the
-trivial grouping that merges each class entirely. The threshold calibrated here collapses into a
-degenerate grouping on a second dataset whose preprocessing differs.
+## Files
 
-This is **not** a claim that no method could succeed. It is a claim about the methods tested here,
-under single-linkage clustering, against a reference grouping that is itself reconstructed — and
-about the fact that on a dataset released without identifiers there is no reference grouping to
-check any other method against. The measurement moves 5.7 pp across a 2.6-fold change in the
-reconstruction rule (`results/grouping_sensitivity.csv`).
+| File | Purpose |
+|---|---|
+| `common.py` | Data loading, capture-group construction, folds, models, seeded training |
+| `run_cv.py` | The 160 cross-validation runs (resumable) |
+| `run_cv_v2.py` | The 200-run follow-up: LFA at earlier insertion points and 320 px input (resumable) |
+| `run_external.py` | Training on all 550 images and zero-shot test on the Vietnamese dataset |
+| `measure_cost.py` | Parameters, MACs and CPU latency |
+| `analyze.py` | Every number, table and figure in the paper, from the saved predictions (no GPU) |
+| `analyze_v2.py` | Table 6 (follow-up experiment) from `results/v2/results.csv` |
+| `make_supplement.py` | Supplementary tables |
+| `make_fig1.py` | Fig. 1 (schematic) |
+| `notebooks/` | The Colab notebooks that produced the reported results |
+| `results/` | Raw outputs: `results.csv`, `preds.csv` (every test prediction), `latency_params.csv`, `external_vietnam.csv`, `ablation_replicates_preliminary.csv`, and the derived `numbers.json`, `run_metrics.csv`, `per_class_metrics.csv`, `sensitivity_grouping.csv`; `results/v2/` holds the follow-up experiment with its pre-registered decision rule |
+| `figures/` | Figures of the analysis scripts |
+| `paper/prl/` | The manuscript: `prl_template.tex` + `render_prl.py` → `manuscript_prl.tex/.pdf`; `make_figs_prl.py` (figures and graphical abstract), `make_supplement_prl.py` (supplementary tables S1–S9), `verify_prl.py` (87 checks), `refs.bib`, highlights, cover letter |
 
-**The repository is subject to its own argument.** The capture sessions here were reconstructed from
-camera filenames after collection, not recorded at collection, and orchard identity was never
-recorded at all. What the numbers below measure is therefore the cost of omitting a grouping rule
-relative to a *reconstructed* one, which is a lower bound on the cost relative to a *recorded* one.
-
-**2. Splitting at the image level inflates every metric.** The dataset contains 560 field images of
-five durian disease categories, produced in only **73 capture sessions** — bursts of one lesion,
-video frames, messaging batches. Under an image-level random split, **58 of the 60 test images
-(96.7%) belong to a session that also appears in training**, and 79.6% of the dataset sits in
-sessions that straddle a partition boundary. Re-running the identical experiment with sessions kept
-whole lowers macro F1 by **12.2 points on average across nine architectures** (range 4.9–18.4,
-positive in all nine) and alters their rank ordering. We do not attach a *p* value to that
-consistency: nine architectures on one dataset are not nine independent replicates, and testing them
-as if they were would repeat the error the paper is about.
-
-**If you use this dataset, group by the `session` column of `sessions.csv`.**
-
----
-
-## Scope of the release
-
-The released dataset is the **five disease classes** listed below and nothing else. The source
-collection from which it was drawn also held six pest-damage categories, added later and outside the
-disease vocabulary under study; those are not part of this release and were set aside before any
-analysis reported in the paper (Sect. 3.2).
-
-| Class (paper) | Folder | Pathogen / cause | Organ photographed |
-|---|---|---|---|
-| Algal leaf spot | `Algal` | *Cephaleuros virescens* | leaf |
-| Leaf rot | `Leaf_rot` | *Colletotrichum* spp. and related leaf blight | leaf |
-| Phomopsis leaf spot | `Phomopsis` | *Phomopsis* sp. (now largely *Diaporthe*) | leaf |
-| Pink disease | `Pink_disease` | *Erythricium salmonicolor* | branch |
-| Root and collar rot | `Root_disease` | *Phytophthora* spp. | trunk, collar |
-
-The classes are **symptom classes, not confirmed aetiologies**: identification rests on
-field-observable symptoms, with no isolation, culture or molecular confirmation, and no second
-independent rater. Phomopsis is photographed on **leaves** here; the pathogen is also reported on
-fruit and stems of durian, but no fruit or stem images are in this dataset.
-
-Pink disease is represented by **three capture sessions** across the entire collection period. Its
-per-class metrics are not interpretable at that support and should not be quoted.
-
----
-
-## Quick start
+## Reproduce
 
 ```bash
 pip install -r requirements.txt
 
-# 1. inspect the session structure and audit any split you already have
-python session_split.py --root <dataset_root> --manifest sessions.csv
+# numbers, tables and figures from the saved predictions (minutes, CPU only)
+python analyze.py
+python make_supplement.py > supplementary_tables.md
+python analyze_v2.py
 
-# 2. build the session-level partition
-python session_split.py --root <dataset_root> --rebuild clean_split
-
-# 3. train and evaluate
-python train.py \
-    --split_dir clean_split --malaysia_data clean_split \
-    --vietnam_data <vietnam_root> --sessions sessions.csv \
-    --cv_mode group --ckpt_dir ckpt --save_dir results --seed 42
+# full experiments (GPU recommended; about 4-5 h for run_cv.py on one GPU)
+python run_cv.py --data path/to/images_or_archive --out results --folds data/folds.csv
+python run_external.py --data path/to/images_or_archive --vietnam path/to/vietnam_archive --out results
+python measure_cost.py --out results
+python run_cv_v2.py --data path/to/images_or_archive --out results/v2   # about 10 h
 ```
 
-To reproduce every number in the paper, including the image-level control:
+`run_cv.py --quick` runs a two-fold smoke test with one epoch per stage and no pretrained weights.
 
-```bash
-python make_image_split.py --src <original_split> --dst image_split
-bash run_all.sh                       # session-level and image-level seeds
-python aggregate.py --root results --out summary
-```
+## Note on the video frames
 
-`run_all.sh` writes a `DONE` marker per run and skips completed ones, so an interrupted run resumes
-by re-running the same command. Do not pass `--retrain` when resuming: it discards the checkpoints
-that make resumption possible.
+The 63 video frames (seven *Phomopsis* videos) were grouped per video and were not passed through the burst rule, although the video files carry camera counter numbers next to still photographs of the largest burst. A video can therefore fall in a different fold from stills taken just before or after it, which inflates the absolute scores, mainly for *Phomopsis*. `analyze.py` reports two sensitivity analyses (`results/sensitivity_grouping.csv`, Supplementary Table S7): scoring without the video frames, and scoring only test images whose group would not have been split if videos had been linked (`common.build_groups(..., link_videos=True)`). The paired comparisons between configurations change little; the absolute macro F1 falls from about 75% to about 66%. The released folds and results are those of the runs as performed (`link_videos=False`).
 
-**The one thing you can check without a GPU:** the sensitivity of the leakage measurement to the
-grouping rule needs only the manifest — no images, no training.
+## Notes on the metric
 
-```bash
-python grouping_sensitivity.py --sessions sessions.csv --seeds 10 --out results
-```
+Macro F1 is computed over the classes present in each test fold. In 3 of the 20 folds no root and collar rot image reaches the test set. The notebooks in `notebooks/` stored a macro F1 averaged over all four classes, which scores the absent class as zero in those folds; `analyze.py` recomputes the metric from `preds.csv`. Both versions are reported in the paper (main text and Supplementary Table S4); the paired comparisons are almost identical.
 
-This reproduces `results/grouping_sensitivity.csv` and Table S14 of the paper in a few seconds.
+## Licence and citation
 
----
-
-## Reproducing the recoverability analysis (Sect. 4.2 of the paper)
-
-This is the part you can run on **your own** dataset, and the part we would most like others to run.
-
-```bash
-# 1. calibrate a perceptual hash against the true sessions
-python validate_proxy.py --root images_512 --sessions sessions.csv --out proxy
-
-# 2. extract features from a learned representation
-python extract_features.py --root images_512 --backend hub \
-    --model dinov2_vitb14 --pool cls --out dinov2_cls.npz
-
-# 3. calibrate that representation on the same footing, hash included for contrast
-python embed_proxy.py --root images_512 --sessions sessions.csv \
-    --embeddings dinov2_cls.npz \
-    --sims 0.70,0.80,0.85,0.86,0.87,0.88,0.90,0.95 --out proxy_dinov2
-
-# 4. apply the calibrated threshold to datasets with no ground truth
-python leakage_survey.py \
-    --dataset "MY=images_512" \
-    --dataset "VN-A=<vietnam_root>" \
-    --embeddings "MY=dinov2_cls.npz" \
-    --embeddings "VN-A=vna_dino.npz" \
-    --sim-threshold 0.86 --out survey
-```
-
-Four things the tooling enforces, because each of them is a way the analysis goes wrong quietly:
-
-- **Precision is reported against a base rate.** The share of within-class image pairs that
-  genuinely share a session is 0.175 here. A clustering that merges each class entirely scores
-  recall 1.0 and precision 0.175, which looks like success and is not.
-- **Detection is scored per image, not as a ratio of rates.** Dividing the proxy's leak rate by the
-  reference's is not a detection rate; it can exceed one, and it does not say which images were
-  missed. `leak_detection.py` gives the per-image contingency instead.
-- **Degenerate solutions are flagged and excluded** from the choice of operating point — by
-  comparison against ground truth where it exists (`embed_proxy.py`), and by structural criteria
-  where it does not (`leakage_survey.py`).
-- **Copies are separated from capture bursts.** Byte-identical and re-encoded duplicates are a
-  dataset-assembly fault; near-identical but genuinely distinct frames are a property of the
-  collection process. Averaging the two compares quantities that are not the same quantity.
-
-Do **not** normalise the threshold per dataset by quantile, singleton fraction or mean cluster size.
-Each of those is a monotone function of how much redundancy is detected, which is what the audit is
-supposed to measure, so any such normalisation forces the datasets to agree on the quantity under
-test.
-
----
-
-## Files
-
-### Evaluation protocol
-
-| File | Purpose |
-|---|---|
-| `session_utils.py` | Session lookup, grouped 80/10/10 split, `StratifiedGroupKFold` folds with an inner validation split, and the image-level control that differs *only* in the grouping variable |
-| `train.py` | Training and full evaluation. `--cv_mode group\|image` selects the partition rule |
-| `make_image_split.py` | Builds the image-level control (446/54/60) from the original partition. Those are **not** the counts of Table 1, which reports the session-level partition (446/58/56) |
-| `run_all.sh` | Both regimes across seeds, resumable |
-| `aggregate.py` | Per-seed results → mean ± s.d. and the paired inflation table |
-
-### Auditing and recoverability
-
-| File | Purpose |
-|---|---|
-| `session_split.py` | Recovers capture sessions from filename structure; reports how much of a given partition leaks; `--gap` varies the burst threshold |
-| `audit_dataset.py` | Exact and near-duplicate detection within one dataset |
-| `audit_public.py` | Audits a public dataset's own published split |
-| `phash_sessions.py` | Recovers clusters by perceptual hash where filenames carry no structure |
-| `classify_redundancy.py` | Separates capture-burst redundancy from duplicated files |
-| `validate_proxy.py` | Calibrates a perceptual hash against filename-derived sessions; reports pair recall/precision and how much of the true leakage the proxy sees |
-| `extract_features.py` | Feature extraction for the calibration (torch.hub / timm / torchvision backends; cls or mean pooling) |
-| `embed_proxy.py` | The same calibration for learned representations, with the hash alongside, base-rate correction and degeneracy flagging |
-| `leakage_survey.py` | Applies one grouping rule across several datasets and emits one comparable row each; supports dHash or embeddings |
-| `leak_detection.py` | Per-test-image agreement between the reference grouping and a content-based proxy: how many leaked images the audit finds, and how many it invents. Supports single, complete and average linkage |
-| `grouping_sensitivity.py` | Varies the session-reconstruction rule and reports how far the leakage measurement moves. Needs only `sessions.csv` |
-| `label_conflicts.py` | Flags images carrying more than one class label, and camera sequence numbers appearing under two classes |
-| `check_contamination.py` | Cross-split contamination check on a built partition |
-| `check_provenance.py` | EXIF and filename-provenance survey of the released files |
-
-### Cross-region
-
-| File | Purpose |
-|---|---|
-| `fix_vietnam_metrics.py` | Recomputes the cross-region macro over an explicit label set, and writes the zero-shot confusion matrices |
-| `diagnose_mapping.py` | Per-class zero-shot behaviour; detects an invalid class correspondence |
-| `vietnam_indomain.py` | In-domain control on the Vietnamese training split |
-| `make_centrecrop.py` | Matched preprocessing control |
-| `shrink.py` | Produces the 512 px working copies every reported figure is computed on |
-| `malaysia_subset_metrics.py` | Source-side macro over matched class subsets |
-| `fill_table_s1.py` | Assembles Supplementary Table S1 from the audit output |
-| `fix_crop_control.py` | Recomputes the centre-crop control metrics |
-| `fix_robustness.py` | Recomputes the perturbation metrics over an explicit label set |
-
-### Figures and reporting
-
-| File | Purpose |
-|---|---|
-| `make_paper_figures.py` | Figs. 1–7 as submitted. Fig. 2 is recomputed from `sessions.csv`; the others are drawn from the manuscript tables, each named in a `SOURCE` comment. See the Fig. 5 caveat in `figures/README.md` |
-| `make_figures.py` | Earlier figure script, retained for the supplementary set |
-| `make_fig3.py` | Alternative path for Fig. 3 (values held inline; update them if Table 3 changes) |
-| `make_figS5_similarity.py` | Fig. S5, within-class cosine similarity distributions |
-| `export_confusion.py` | Confusion matrices from a checkpoint — **required to finalise Fig. 5** |
-| `regen_gradcam.py` | Grad-CAM panels (Fig. S3) |
-| `mobilenetv2_lfa.py` | LFA on a second backbone, for the ablation in Supplementary Sect. S1 |
-
-### Paper and results
-
-| Path | Content |
-|---|---|
-| `paper/manuscript_EI.md` | Manuscript source as submitted |
-| `paper/supplementary_material.md` | Supplementary material |
-| `results/group_s*`, `results/image_s*` | Per-seed outputs for both partition conditions: per-class metrics, comparison tables, cross-validation, robustness and cross-region results. Tables 6, 7, 9, 10 and 11 and Supplementary Tables S3–S6 aggregate from these |
-| `results/group_s42/confusion_matrix.csv` | The matrix behind Fig. 5, so the figure can be checked without a checkpoint |
-| `results/grouping_sensitivity.csv` | Table S14, reproducible from `sessions.csv` alone |
-| `results/plantvillage_per_class.csv`, `results/plantvillage_summary.txt` | Table S15 and Sect. S16 |
-| `figures/` | Figs. 1–7, PDF and PNG at 400 dpi |
-| `CHANGELOG.md` | What changed in v2.1.0 and why |
-
----
-
-## Known issues and conventions
-
-- **Evaluate at the resolution you trained at.** Every figure in the paper is computed on the 512 px
-  copies. Running the same checkpoint on the full-resolution originals through the identical
-  resize-and-centre-crop pipeline moves held-out macro F1 from 72.0% to 77.6%. Reproductions from
-  the archived originals will not match unless you downscale first.
-- **Macro averaging is over an explicit label set.** Classes absent from a target evaluation are
-  excluded from the average, not entered as zeros. The `scikit-learn` default averages over the
-  union of true and predicted labels and reports values 20% lower on the cross-region task.
-- **Two instances of the same configuration appear in the paper.** The attention ablation and the
-  architecture comparison were run as separate experiments, so EfficientNet-B0 with and without LFA
-  were each trained twice from independent random streams. Both are reported; the difference between
-  them is used as an estimate of run-to-run variation.
-- **LFA is not a claimed improvement, and it is not the smallest-footprint option.** Under
-  leakage-free multi-seed evaluation no attention configuration separates from an attention-free
-  baseline beyond run-to-run noise: the contrast is 2.1 pp with a 95% confidence interval from −7.4
-  to 11.6, while training the same model twice moves the score by 5.1 pp on average and by as much
-  as 8.5 pp. The attention-free baseline has 1,281 *fewer* parameters, and the design cannot
-  distinguish the two on accuracy. LFA is retained as one option among alternatives this design
-  cannot separate. The paper makes no architectural claim; the ablation is Supplementary Sect. S1.
-- **An earlier three-seed analysis appeared to show the ranking of attention modules reversing
-  between the two protocols. A fourth seed removed it.** The paper reports the retraction. Do not
-  cite the reversal, and disregard any earlier version of this README or of the Zenodo record that
-  repeats it.
-- **Site (orchard) identifiers were never recorded** and cannot be recovered: no released file
-  retains a GPS tag, capture timestamp or camera make-and-model tag. Leave-one-site-out validation
-  is therefore impossible on this dataset. This is the defect the reporting protocol in the paper
-  exists to prevent.
-
----
-
-## Citation
-
-See `CITATION.cff`. Dataset released under CC BY 4.0; code under the MIT licence.
+Code: MIT licence (see `LICENSE`). Please cite the paper and the dataset (see `CITATION.cff`).
