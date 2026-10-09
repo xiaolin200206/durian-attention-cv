@@ -1,4 +1,4 @@
-"""Fig. 1: where the attention module sits, and what LFA computes."""
+"""Schematic: where the attention module sits, and what the single-channel spatial gate (SG; lfa in the code) computes."""
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -27,14 +27,14 @@ ax.text(0.05, 5.35, '(a) Classifier', fontsize=9, fontweight='bold', color=INK)
 y = 3.95
 box(ax, 0.05, y, 1.5, 1.0, 'Image\n224 × 224 × 3')
 box(ax, 1.9, y, 1.95, 1.0, 'EfficientNet-B0\nfeatures\n(ImageNet weights)')
-box(ax, 4.2, y, 2.15, 1.0, 'Attention module\nnone | LFA |\nSE | CBAM', fc=LIGHT, ec=BLUE, bold=True)
+box(ax, 4.2, y, 2.15, 1.0, 'Attention module\nnone | SG |\nSE | CBAM', fc=LIGHT, ec=BLUE, bold=True)
 box(ax, 6.7, y, 1.5, 1.0, 'Global\naverage\npooling')
 box(ax, 8.55, y, 1.7, 1.0, 'Dropout 0.3 +\nlinear layer\n(4 classes)')
 for x0, x1 in [(1.55, 1.9), (3.85, 4.2), (6.35, 6.7), (8.2, 8.55)]:
     arrow(ax, x0, y + 0.5, x1, y + 0.5)
 ax.text(4.02, y - 0.25, '1280 × 7 × 7', ha='center', fontsize=7, color=INK2)
 # (b) LFA
-ax.text(0.05, 2.65, '(b) Lesion-focus attention (LFA)', fontsize=9, fontweight='bold', color=INK)
+ax.text(0.05, 2.65, '(b) Single-channel spatial gate (SG)', fontsize=9, fontweight='bold', color=INK)
 y = 0.35
 box(ax, 0.05, y, 1.5, 1.0, 'X\nC × H × W')
 box(ax, 1.95, y, 2.0, 1.0, '1 × 1 convolution\nC → 1\n(C + 1 parameters)')

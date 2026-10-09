@@ -1,4 +1,4 @@
-"""Table 6 of the paper (insertion point and input resolution) from results/v2/results.csv.
+"""Follow-up experiment table (insertion point and input resolution) from results/v2/results.csv.
 
     python analyze_v2.py --results results/v2
 

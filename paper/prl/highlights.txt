@@ -1,5 +1,0 @@
-Three attention modules tested on 550 field durian images: 20 grouped folds, 2 seeds
-No module met a pre-registered rule; LFA vs plain net -0.13 pp (95% CI -4.56 to 4.31)
-Changing only the random seed moved macro F1 by 5.3 points on average
-Earlier insertion points and 320-px input did not help in a 200-run follow-up
-Single-run gains of a few points on small field datasets are not evidence

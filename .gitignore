@@ -5,7 +5,7 @@ __pycache__/
 _extracted/
 results/cache_*.pkl
 
-# LaTeX build files (paper/prl)
+# LaTeX build files
 *.aux
 *.bbl
 *.blg
@@ -15,5 +15,7 @@ results/cache_*.pkl
 *.out
 *.spl
 *.synctex.gz
-paper/prl/pg-*.png
-paper/prl/sp-*.png
+
+# manuscript sources are kept outside this repository
+manuscript*/
+submission*/

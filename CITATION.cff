@@ -1,13 +1,20 @@
 cff-version: 1.2.0
-message: "If you use this code, please cite the paper and the dataset."
-title: "Seed-to-seed variation outweighs lightweight attention gains: a grouped, repeated cross-validation study on field durian disease images (code and results)"
+message: "If you use this code, the fold assignment or the results, please cite the dataset and this repository."
+title: "Field durian disease images: grouped, repeated cross-validation of an EfficientNet-B0 classifier (code, folds and results)"
 authors:
   - family-names: "Lin"
     given-names: "Ding Shan"
     orcid: "https://orcid.org/0009-0009-6031-8479"
-    affiliation: "UCSI University"
+    affiliation: "Independent researcher, Malaysia"
 license: MIT
 repository-code: "https://github.com/xiaolin200206/durian-attention-cv"
+keywords:
+  - durian
+  - Durio zibethinus
+  - plant disease diagnosis
+  - grouped cross-validation
+  - data leakage
+  - EfficientNet
 references:
   - type: dataset
     title: "Durian disease field dataset from Peninsular Malaysia, with capture-session identifiers"
