@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this code, the fold assignment or the results, please cite the dataset and this repository."
-title: "Field durian disease images: grouped, repeated cross-validation of an EfficientNet-B0 classifier (code, folds and results)"
+title: "Field durian disease images: grouped cross-validation, backbone comparison and referral to the grower (code, folds and results)"
 authors:
   - family-names: "Lin"
     given-names: "Ding Shan"
@@ -15,6 +15,8 @@ keywords:
   - grouped cross-validation
   - data leakage
   - EfficientNet
+  - selective prediction
+  - decision support
 references:
   - type: dataset
     title: "Durian disease field dataset from Peninsular Malaysia, with capture-session identifiers"

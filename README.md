@@ -1,4 +1,4 @@
-# Field durian disease images: grouped, repeated cross-validation of an EfficientNet-B0 classifier
+# Field durian disease images: grouped cross-validation, backbone comparison and referral to the grower
 
 Code, fold assignment, per-image predictions and analysis scripts for a study of how reliably durian (*Durio zibethinus*) diseases can be recognised from field photographs when photographs of one capture event are never split between training and test data.
 
@@ -9,6 +9,8 @@ Author: Lin Ding Shan, independent researcher, Malaysia (ORCID [0009-0009-6031-8
 - **Data.** 550 field photographs of four durian disease classes (algal leaf spot, leaf blight complex, *Phomopsis* leaf spot, root and collar rot) taken in commercial orchards in Negeri Sembilan, Peninsular Malaysia, between July 2025 and June 2026. Every image is assigned to a capture group reconstructed from camera counters, so near-identical photographs of one specimen stay together.
 - **Evaluation.** EfficientNet-B0 (ImageNet weights) evaluated with stratified group k-fold cross-validation: 4 folds × 5 repeats = 20 test folds, two fixed seeds per fold, configurations compared in pairs with the corrected resampled *t*-test of Nadeau and Bengio (2003), plus equivalence tests against ±2 percentage points.
 - **Comparisons.** The plain network against three lightweight attention modules: a single-channel spatial gate (**SG**, 1,281 parameters; called `lfa` / LFA in the code and result files), squeeze-and-excitation (SE) and CBAM. A follow-up experiment (200 runs) moves the SG to earlier layers and raises the input to 320 px.
+- **Backbones.** EfficientNet-B0 against MobileNetV3-Large, MobileNetV4-Conv-Medium, ConvNeXt V2-Tiny and ViT-S/16 (timm weights) under one fixed recipe, same folds and seeds (200 runs; analysis fixed in `results/v3/PREREG.md` before the runs; Holm-adjusted corrected *t*-tests).
+- **Referral to the grower.** Confidence-based selective prediction: the threshold is chosen on the inner-validation images only; coverage, accuracy on decided images, per-class referral, AURC and top-2 accuracy.
 - **External test.** Models trained on the Malaysian images are tested without adaptation on the Vietnamese durian leaf dataset of Nguyen Thanh et al. (2025).
 
 ## Main results
@@ -25,9 +27,15 @@ Primary scoring: the 63 *Phomopsis* video frames excluded (see *Note on the vide
 | SE − plain network | −1.26 (−10.28 to 7.76) points |
 | CBAM − plain network | −0.23 (−5.83 to 5.37) points |
 | Smallest difference resolvable with any number of repeated folds (SG) | about ±3.9 points |
-| Macro F1 on the Vietnamese dataset (four configurations) | 39–41 % |
+| Macro F1 on the Vietnamese dataset (four EfficientNet-B0 configurations) | 39–41 % |
+| ConvNeXt V2-Tiny / ViT-S/16 − EfficientNet-B0 (retrained), macro F1 | +8.2 / +8.3 points; ahead on 18 of 20 folds; Holm *p* = 0.055 / 0.126 (pre-specified rule not met) |
+| MobileNetV4-Conv-Medium / MobileNetV3-Large − EfficientNet-B0 | −8.4 / −2.3 points |
+| Median single-thread CPU latency, EfficientNet-B0 / ViT-S/16 / ConvNeXt V2-Tiny | 36.7 / 100.8 / 163.4 ms |
+| Accuracy on the 70 % most confident images, ConvNeXt V2-Tiny / ViT-S/16 / EfficientNet-B0 | 90.7 / 91.2 / 80.9 % |
+| Top-2 accuracy, ConvNeXt V2-Tiny / EfficientNet-B0 | 96.9 / 93.5 % |
+| Referral threshold set for 90 % accuracy: ConvNeXt V2-Tiny decided / accuracy on decided images | 89.1 % of images / 86.4 % (below 90 % in 21 of 40 runs) |
 
-No attention module, insertion point or input size met the decision rule (gain ≥ 2 points with the corrected 95 % CI above zero).
+No attention module, insertion point or input size met the decision rule (gain ≥ 2 points with the corrected 95 % CI above zero), and neither larger backbone met the rule for the backbone experiment (gain ≥ 2 points with Holm-adjusted *p* < 0.05).
 
 ## Repository layout
 
@@ -39,15 +47,18 @@ No attention module, insertion point or input size met the decision rule (gain �
 | `run_external.py` | Training on the Malaysian images and the test on the Vietnamese dataset |
 | `measure_cost.py` | Parameters, multiply–accumulate operations and CPU latency |
 | `analyze.py` | Derived result files (`results/numbers.json`, `run_metrics.csv`, `per_class_metrics.csv`, `sensitivity_grouping.csv`) and `figures/` from the saved predictions |
+| `notebooks/backbone_decision_v3.ipynb` | Colab notebook of the backbone and referral experiment (reuses the cached images and `data/folds.csv`; writes `results/v3/`) |
 | `analyze_v2.py` | Follow-up experiment summary (`results/v2/numbers_v2.json`, `table6.md`) |
 | `make_fig1.py` | Classifier and SG schematic in `figures/` |
 | `paper/compute_numbers.py` | Every number reported in the paper, under both scorings (all test images; video frames excluded) → `paper/numbers.json` |
 | `paper/make_figures.py` | Figures of the paper → `paper/figures/` (example photographs in `paper/figures/examples/`) |
-| `paper/make_supplement.py` | Supplementary Tables S1–S10 and Figs. S1–S2 → `paper/supplementary.md` / `.docx` / `.pdf` |
-| `paper/check_numbers.py` | Checks every computed number quoted in a manuscript `.tex` file against `paper/numbers.json` and the result files; fails, naming the item, on any disagreement |
+| `paper/compute_numbers_v3.py` | Every number of the backbone and referral experiment, under both scorings (also needs `common.py`, hence torch, for the video-linked sensitivity analysis) → `paper/numbers_v3.json` |
+| `paper/make_figures_v3.py` | Backbone and referral figures → `paper/figures/fig5_backbones`, `fig6_decision` |
+| `paper/make_supplement.py` | Supplementary Tables S1–S18 and Figs. S1–S2 → `paper/supplementary.md` / `.docx` / `.pdf` (`--blind` writes an anonymised copy) |
+| `paper/check_numbers.py`, `paper/check_numbers_v3.py` | Check every computed number quoted in a manuscript `.tex` file against `paper/numbers.json`, `paper/numbers_v3.json` and the result files; fail, naming the item, on any disagreement |
 | `data/` | `sessions.csv` (class, file name and capture session for all 560 released images) and `folds.csv` (the fold assignment used) |
 | `notebooks/` | The Colab notebooks that produced the reported runs |
-| `results/` | Raw outputs: `results.csv` (one row per run), `preds.csv` (every test prediction), `latency_params.csv`, `external_vietnam.csv`, `ablation_replicates_preliminary.csv`, and derived files; `results/v2/` holds the follow-up experiment, including `PREREG.md`, the analysis written before its runs |
+| `results/` | Raw outputs: `results.csv` (one row per run), `preds.csv` (every test prediction), `latency_params.csv`, `external_vietnam.csv`, `ablation_replicates_preliminary.csv`, and derived files; `results/v2/` holds the follow-up experiment and `results/v3/` the backbone and referral experiment (`results.csv`, `preds.csv` with the validation and test probabilities of every run, `cost.csv`, `versions.txt`), each with the `PREREG.md` written before its runs |
 | `figures/` | Figures written by `analyze.py` and `make_fig1.py` |
 
 ## Data
@@ -66,16 +77,22 @@ python analyze.py
 python analyze_v2.py --results results/v2
 python make_fig1.py
 python paper/compute_numbers.py
+python paper/compute_numbers_v3.py
+python paper/make_figures_v3.py
 python paper/make_figures.py
 python paper/make_supplement.py
 python paper/check_numbers.py path/to/manuscript.tex     # optional, with the manuscript source
+python paper/check_numbers_v3.py path/to/manuscript.tex
 
 # full experiments (GPU recommended; about 4-5 h for run_cv.py on one GPU)
 python run_cv.py --data path/to/images_or_archive --out results --folds data/folds.csv
 python run_external.py --data path/to/images_or_archive --vietnam path/to/vietnam_archive --out results
 python measure_cost.py --out results
 python run_cv_v2.py --data path/to/images_or_archive --out results/v2   # about 10 h
+# backbone and referral experiment: open notebooks/backbone_decision_v3.ipynb in Colab (T4 or better; about 2.6-3.0 min per run, 200 runs)
 ```
+
+The notebooks contain some comments in Chinese.
 
 `run_cv.py --quick` runs a two-fold smoke test with one epoch per stage and no pretrained weights. Some GPU operations are non-deterministic even with fixed seeds, so a rerun may differ slightly from the released predictions.
 

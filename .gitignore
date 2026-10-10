@@ -19,3 +19,6 @@ results/cache_*.pkl
 # manuscript sources are kept outside this repository
 manuscript*/
 submission*/
+
+# anonymised copy of the supplement for review
+paper/supplementary_blind.*

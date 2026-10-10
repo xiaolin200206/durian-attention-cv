@@ -1,0 +1,6 @@
+config,params_M,cpu_ms_1thr_median,cpu_ms_1thr_p90
+effb0,4.013,36.71,50.15
+mnv3l,4.207,29.05,32.63
+mnv4m,8.44,43.25,68.56
+cnxv2t,27.87,163.44,219.13
+vits,21.667,100.82,113.68
