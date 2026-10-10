@@ -92,7 +92,6 @@ python run_cv_v2.py --data path/to/images_or_archive --out results/v2   # about 
 # backbone and referral experiment: open notebooks/backbone_decision_v3.ipynb in Colab (T4 or better; about 2.6-3.0 min per run, 200 runs)
 ```
 
-The notebooks contain some comments in Chinese.
 
 `run_cv.py --quick` runs a two-fold smoke test with one epoch per stage and no pretrained weights. Some GPU operations are non-deterministic even with fixed seeds, so a rerun may differ slightly from the released predictions.
 
