@@ -296,3 +296,44 @@ Mean accuracy without any referral on the validation images and on the test fold
 | MobileNetV4-Conv-Medium | 79.8 | 66.5 | 11 | 5 |
 | ConvNeXt V2-Tiny | 93.2 | 82.9 | 32 | 25 |
 | ViT-S/16 | 91.9 | 82.3 | 29 | 18 |
+
+
+## Table S19. Absolute and referral results on the strict subset (test and validation images whose video-linked group lies entirely inside the evaluated subset)
+
+Mean test images per run 87.0 (primary scoring: 121.8); mean validation images per run 34.2 (primary scoring: 34.8). This subset contains 1.4 % *Phomopsis* images against 19.3 % in the primary scoring, so it is cleaner but easier and is not a corrected estimate. Means over 40 runs; decided = images whose confidence reached the threshold chosen on the validation images.
+
+| Backbone | Macro F1 (%) | Accuracy (%) | AURC | Top-2 (%) | Accuracy at 70 % coverage (%) | Decided, 90 % target (%) | Accuracy on decided (%) | Runs below 90 % | Decided, 95 % target (%) | Accuracy on decided (%) | Runs below 95 % |
+|--------------------|--------|--------|------|-------|----------|----------|----------|--------|----------|----------|--------|
+| EfficientNet-B0 | 67.0 | 77.0 | 10.57 | 95.5 | 84.9 | 69.3 | 84.9 | 20/39 | 57.1 | 88.8 | 28/39 |
+| MobileNetV3-Large | 63.3 | 74.4 | 12.63 | 94.3 | 83.8 | 57.2 | 84.6 | 24/38 | 43.3 | 90.4 | 19/37 |
+| MobileNetV4-Conv-Medium | 56.9 | 68.7 | 16.83 | 93.9 | 78.3 | 61.4 | 79.9 | 29/38 | 48.8 | 84.0 | 28/38 |
+| ConvNeXt V2-Tiny | 74.0 | 86.8 | 4.21 | 97.4 | 94.1 | 89.8 | 90.0 | 14/40 | 84.8 | 91.1 | 28/40 |
+| ViT-S/16 | 73.8 | 85.2 | 4.54 | 96.7 | 93.8 | 88.3 | 89.2 | 18/40 | 76.9 | 92.3 | 24/40 |
+
+
+## Table S20. Top-2 hit rate and errors among automatically decided images, by true class (primary scoring, video frames excluded)
+
+Pooled over the 40 runs of each backbone (images, not run means). Top-2: the correct class was among the two most probable. Decided: confidence reached the threshold set on the validation images for a 90 % target. Error among decided: share of decided images of that class that were misclassified. *Phomopsis* images come essentially from one capture group.
+
+| Backbone | Class | Test images | Recall (%) | Top-2 (%) | Decided (%) | Error among decided (%) |
+|----------------------|----------------------|----------|----------|----------|----------|--------------|
+| EfficientNet-B0 | Algal leaf spot | 1620 | 63.9 | 92.8 | 61.1 | 29.4 |
+| EfficientNet-B0 | Leaf blight | 1530 | 80.7 | 98.7 | 63.0 | 16.9 |
+| EfficientNet-B0 | Phomopsis leaf spot | 940 | 42.9 | 74.0 | 35.4 | 54.1 |
+| EfficientNet-B0 | Root and collar rot | 780 | 99.2 | 99.7 | 94.4 | 0.1 |
+| MobileNetV3-Large | Algal leaf spot | 1620 | 64.6 | 92.4 | 54.6 | 28.2 |
+| MobileNetV3-Large | Leaf blight | 1530 | 75.9 | 96.9 | 52.9 | 21.1 |
+| MobileNetV3-Large | Phomopsis leaf spot | 940 | 46.3 | 72.7 | 38.9 | 42.9 |
+| MobileNetV3-Large | Root and collar rot | 780 | 97.2 | 99.5 | 86.7 | 1.2 |
+| MobileNetV4-Conv-Medium | Algal leaf spot | 1620 | 57.5 | 90.2 | 55.8 | 34.2 |
+| MobileNetV4-Conv-Medium | Leaf blight | 1530 | 69.5 | 98.1 | 58.3 | 25.9 |
+| MobileNetV4-Conv-Medium | Phomopsis leaf spot | 940 | 43.8 | 69.4 | 42.7 | 52.6 |
+| MobileNetV4-Conv-Medium | Root and collar rot | 780 | 95.9 | 97.8 | 90.1 | 2.3 |
+| ConvNeXt V2-Tiny | Algal leaf spot | 1620 | 87.2 | 98.3 | 91.4 | 9.9 |
+| ConvNeXt V2-Tiny | Leaf blight | 1530 | 77.6 | 97.8 | 88.4 | 20.3 |
+| ConvNeXt V2-Tiny | Phomopsis leaf spot | 940 | 58.4 | 89.0 | 81.4 | 38.3 |
+| ConvNeXt V2-Tiny | Root and collar rot | 780 | 99.1 | 99.6 | 99.1 | 0.5 |
+| ViT-S/16 | Algal leaf spot | 1620 | 81.9 | 97.2 | 89.1 | 14.3 |
+| ViT-S/16 | Leaf blight | 1530 | 76.4 | 96.3 | 85.4 | 20.5 |
+| ViT-S/16 | Phomopsis leaf spot | 940 | 71.7 | 89.3 | 80.9 | 24.3 |
+| ViT-S/16 | Root and collar rot | 780 | 100.0 | 100.0 | 99.9 | 0.0 |

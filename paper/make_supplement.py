@@ -281,6 +281,33 @@ def main():
         out.append(f"| {BL[c]} | {x9['val_acc_mean']:.1f} | {x9['test_acc_mean']:.1f} | {x9['runs_val_meets_target']} | {x95['runs_val_meets_target']} |")
     out.append('')
 
+
+    # S19 strict-subset absolute and referral results, S20 per-class top-2 and error among decided images
+    st = V.get('strict')
+    if st:
+        out += ['', '## Table S19. Absolute and referral results on the strict subset (test and validation images whose video-linked group lies entirely inside the evaluated subset)', '',
+                f"Mean test images per run {st['test_n_mean']:.1f} (primary scoring: 121.8); mean validation images per run {st['val_n_mean']:.1f} (primary scoring: {st['val_n_mean_orig']:.1f}). "
+                'This subset contains 1.4 % *Phomopsis* images against 19.3 % in the primary scoring, so it is cleaner but easier and is not a corrected estimate. Means over 40 runs; decided = images whose confidence reached the threshold chosen on the validation images.', '',
+                '| Backbone | Macro F1 (%) | Accuracy (%) | AURC | Top-2 (%) | Accuracy at 70 % coverage (%) | Decided, 90 % target (%) | Accuracy on decided (%) | Runs below 90 % | Decided, 95 % target (%) | Accuracy on decided (%) | Runs below 95 % |',
+                sep(20, 8, 8, 6, 7, 10, 10, 10, 8, 10, 10, 8)]
+        for c in BB:
+            cv, a9, a95 = st['curves'][c], st['sel90'][c], st['sel95'][c]
+            out.append(f"| {BL[c]} | {st['macro_f1'][c]:.1f} | {cv['acc']:.1f} | {cv['aurc']:.2f} | {cv['top2']:.1f} | {cv['acc_at_70']:.1f} | {a9['coverage']:.1f} | {a9['sel_acc_mean_of_runs']:.1f} | "
+                       f"{a9['runs_below_target']}/{a9['runs_with_accepted']} | {a95['coverage']:.1f} | {a95['sel_acc_mean_of_runs']:.1f} | {a95['runs_below_target']}/{a95['runs_with_accepted']} |")
+        out.append('')
+    cb = V['novid'].get('class_breakdown')
+    if cb:
+        names = {'Algal': 'Algal leaf spot', 'Leaf_rot': 'Leaf blight', 'Phomopsis': 'Phomopsis leaf spot', 'Root_disease': 'Root and collar rot'}
+        out += ['', '## Table S20. Top-2 hit rate and errors among automatically decided images, by true class (primary scoring, video frames excluded)', '',
+                'Pooled over the 40 runs of each backbone (images, not run means). Top-2: the correct class was among the two most probable. Decided: confidence reached the threshold set on the validation images for a 90 % target. '
+                'Error among decided: share of decided images of that class that were misclassified. *Phomopsis* images come essentially from one capture group.', '',
+                '| Backbone | Class | Test images | Recall (%) | Top-2 (%) | Decided (%) | Error among decided (%) |', sep(22, 22, 10, 10, 10, 10, 14)]
+        for c in BB:
+            for k, nm in names.items():
+                x = cb['90'][c][k]
+                out.append(f"| {BL[c]} | {nm} | {x['n']} | {x['recall_pct']:.1f} | {x['top2_pct']:.1f} | {x['decided_pct']:.1f} | {x['error_among_decided_pct']:.1f} |")
+        out.append('')
+
     text = re.sub(r'(?<=[\s\[(,|])-(?=\d)', '−', '\n'.join(out))
     md = HERE / f'{STEM}.md'
     md.write_text(text)

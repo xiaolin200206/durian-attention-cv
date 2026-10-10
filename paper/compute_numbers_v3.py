@@ -83,6 +83,32 @@ def curves(test):
     return pd.DataFrame(rows)
 
 
+def class_breakdown(val, test, target):
+    """Per true class, pooled over runs: top-2 hit rate, share auto-decided, error rate among decided."""
+    out = {c: {k: [0, 0, 0, 0, 0] for k in CLASSES} for c in CFG}   # n, top2 hits, decided, decided wrong, correct overall
+    for key, gt in test.groupby(['config', 'repeat', 'fold', 'seed']):
+        gv = val[(val.config == key[0]) & (val.repeat == key[1]) & (val.fold == key[2]) & (val.seed == key[3])]
+        t = pick_threshold(gv[PCOLS].max(axis=1).values, (gv.y_true == gv.y_pred).values, target)
+        pr = gt[PCOLS].values
+        conf, corr = pr.max(axis=1), (gt.y_true == gt.y_pred).values
+        top2 = (np.argsort(-pr, 1)[:, :2] == gt.y_true.values[:, None]).any(1)
+        acc = conf >= t
+        for j, k in enumerate(CLASSES):
+            m = gt.y_true.values == j
+            o = out[key[0]][k]
+            o[0] += int(m.sum()); o[1] += int(top2[m].sum()); o[2] += int((acc & m).sum())
+            o[3] += int((acc & m & ~corr).sum()); o[4] += int(corr[m].sum())
+    res = {}
+    for c in CFG:
+        res[c] = {}
+        for k in CLASSES:
+            n, t2, d, w, ok = out[c][k]
+            res[c][k] = {'n': n, 'top2_pct': t2 / n * 100 if n else None, 'recall_pct': ok / n * 100 if n else None,
+                         'decided_pct': d / n * 100 if n else None,
+                         'error_among_decided_pct': w / d * 100 if d else None, 'decided_wrong': w, 'decided': d}
+    return res
+
+
 def main():
     sess = pd.read_csv(ROOT / 'data' / 'sessions.csv')
     sess['video'] = sess.session.astype(str).str.startswith('video:')
@@ -161,6 +187,7 @@ def main():
                                                for k in CLASSES}}
             sel[f'{int(tgt * 100)}'] = s
         b['selective'] = sel
+        b['class_breakdown'] = {f'{int(t * 100)}': class_breakdown(qv, q, t) for t in TARGETS}
         N[scoring] = b
 
     # sensitivity: score only test images whose video-linked group was not split (needs common.py, hence torch)
@@ -187,6 +214,37 @@ def main():
         for c, h in zip(PRIMARY, holm([un['paired'][c]['p_corrected'] for c in PRIMARY])):
             un['paired'][c]['p_holm'] = h
         N['unsplit'] = un
+
+        # strict scoring of the absolute and referral results: test images AND validation images whose video-linked group
+        # lies entirely inside the evaluated subset (so nothing is linked across the training boundary)
+        vv = val.merge(s2[['cls', 'file', 'group_linked']], on=['cls', 'file'], how='left')
+        keep = []
+        for _, g in vv.groupby(['config', 'repeat', 'fold', 'seed']):
+            cnt = g.group_linked.value_counts()
+            full = cnt[cnt == size_linked[cnt.index].values].index
+            keep.append(g[g.group_linked.isin(full)])
+        vstrict = pd.concat(keep)
+        tstrict = []
+        for _, g in pv.groupby(['config', 'repeat', 'fold', 'seed']):
+            cnt = g.group_linked.value_counts()
+            tstrict.append(g[g.group_linked.isin(cnt[cnt == size_linked[cnt.index].values].index)])
+        tstrict = pd.concat(tstrict)
+        cvs = curves(tstrict)
+        st = {'test_n_mean': float(tstrict[tstrict.config == REF].groupby(['repeat', 'fold', 'seed']).size().mean()),
+              'val_n_mean': float(vstrict[vstrict.config == REF].groupby(['repeat', 'fold', 'seed']).size().mean()),
+              'val_n_mean_orig': float(val[(val.config == REF) & ~val.video].groupby(['repeat', 'fold', 'seed']).size().mean()),
+              'macro_f1': {c: float(run_metrics(tstrict[tstrict.config == c]).macro_f1.mean()) for c in CFG},
+              'curves': {c: {'acc': cvs[cvs.config == c].acc.mean(), 'aurc': cvs[cvs.config == c].aurc.mean(),
+                             'top2': cvs[cvs.config == c].top2.mean(), 'acc_at_70': cvs[cvs.config == c].acc_at_70.mean()} for c in CFG}}
+        for tgt in TARGETS:
+            d = per_run_decision(vstrict, tstrict, tgt)
+            st[f'sel{int(tgt * 100)}'] = {c: {'coverage': float(d[d.config == c].coverage.mean()),
+                                              'sel_acc_mean_of_runs': float(d[d.config == c].sel_acc.mean()),
+                                              'sel_acc_pooled': float(d[d.config == c].n_acc_correct.sum() / d[d.config == c].n_acc.sum() * 100),
+                                              'runs_below_target': int((d[d.config == c].sel_acc < tgt * 100).sum()),
+                                              'runs_with_accepted': int(d[d.config == c].sel_acc.notna().sum()),
+                                              'runs_all_accepted': int(d[d.config == c].all_accepted.sum())} for c in CFG}
+        N['strict'] = st
     except ImportError:
         print('torch not available: sensitivity to video-linked groups skipped')
 

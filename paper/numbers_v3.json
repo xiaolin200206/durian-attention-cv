@@ -1369,6 +1369,392 @@
      }
     }
    }
+  },
+  "class_breakdown": {
+   "90": {
+    "effb0": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 92.83950617,
+      "recall_pct": 63.88888889,
+      "decided_pct": 67.5308642,
+      "error_among_decided_pct": 30.2559415,
+      "decided_wrong": 331,
+      "decided": 1094
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 98.69281046,
+      "recall_pct": 80.65359477,
+      "decided_pct": 70.13071895,
+      "error_among_decided_pct": 17.24137931,
+      "decided_wrong": 185,
+      "decided": 1073
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 83.69426752,
+      "recall_pct": 64.26751592,
+      "decided_pct": 56.43312102,
+      "error_among_decided_pct": 23.47629797,
+      "decided_wrong": 208,
+      "decided": 886
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.74358974,
+      "recall_pct": 99.23076923,
+      "decided_pct": 96.41025641,
+      "error_among_decided_pct": 0.13297872,
+      "decided_wrong": 1,
+      "decided": 752
+     }
+    },
+    "mnv3l": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 92.40740741,
+      "recall_pct": 64.56790123,
+      "decided_pct": 60.80246914,
+      "error_among_decided_pct": 29.03553299,
+      "decided_wrong": 286,
+      "decided": 985
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 96.8627451,
+      "recall_pct": 75.88235294,
+      "decided_pct": 59.54248366,
+      "error_among_decided_pct": 22.17343578,
+      "decided_wrong": 202,
+      "decided": 911
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 83.43949045,
+      "recall_pct": 66.87898089,
+      "decided_pct": 51.91082803,
+      "error_among_decided_pct": 20.98159509,
+      "decided_wrong": 171,
+      "decided": 815
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.48717949,
+      "recall_pct": 97.17948718,
+      "decided_pct": 87.43589744,
+      "error_among_decided_pct": 1.17302053,
+      "decided_wrong": 8,
+      "decided": 682
+     }
+    },
+    "mnv4m": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 90.24691358,
+      "recall_pct": 57.5308642,
+      "decided_pct": 62.90123457,
+      "error_among_decided_pct": 34.44553484,
+      "decided_wrong": 351,
+      "decided": 1019
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 98.10457516,
+      "recall_pct": 69.54248366,
+      "decided_pct": 65.75163399,
+      "error_among_decided_pct": 26.64015905,
+      "decided_wrong": 268,
+      "decided": 1006
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 81.52866242,
+      "recall_pct": 64.26751592,
+      "decided_pct": 59.8089172,
+      "error_among_decided_pct": 25.45260916,
+      "decided_wrong": 239,
+      "decided": 939
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 97.82051282,
+      "recall_pct": 95.8974359,
+      "decided_pct": 91.66666667,
+      "error_among_decided_pct": 2.37762238,
+      "decided_wrong": 17,
+      "decided": 715
+     }
+    },
+    "cnxv2t": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 98.27160494,
+      "recall_pct": 87.22222222,
+      "decided_pct": 91.85185185,
+      "error_among_decided_pct": 10.08064516,
+      "decided_wrong": 150,
+      "decided": 1488
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 97.77777778,
+      "recall_pct": 77.58169935,
+      "decided_pct": 89.28104575,
+      "error_among_decided_pct": 20.35139092,
+      "decided_wrong": 278,
+      "decided": 1366
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 93.12101911,
+      "recall_pct": 74.20382166,
+      "decided_pct": 88.72611465,
+      "error_among_decided_pct": 22.25412778,
+      "decided_wrong": 310,
+      "decided": 1393
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.61538462,
+      "recall_pct": 99.1025641,
+      "decided_pct": 99.1025641,
+      "error_among_decided_pct": 0.51746442,
+      "decided_wrong": 4,
+      "decided": 773
+     }
+    },
+    "vits": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 97.22222222,
+      "recall_pct": 81.91358025,
+      "decided_pct": 93.02469136,
+      "error_among_decided_pct": 15.59389516,
+      "decided_wrong": 235,
+      "decided": 1507
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 96.33986928,
+      "recall_pct": 76.40522876,
+      "decided_pct": 91.11111111,
+      "error_among_decided_pct": 21.2338594,
+      "decided_wrong": 296,
+      "decided": 1394
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 93.50318471,
+      "recall_pct": 82.61146497,
+      "decided_pct": 92.48407643,
+      "error_among_decided_pct": 14.73829201,
+      "decided_wrong": 214,
+      "decided": 1452
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 100.0,
+      "recall_pct": 100.0,
+      "decided_pct": 99.87179487,
+      "error_among_decided_pct": 0.0,
+      "decided_wrong": 0,
+      "decided": 779
+     }
+    }
+   },
+   "95": {
+    "effb0": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 92.83950617,
+      "recall_pct": 63.88888889,
+      "decided_pct": 54.75308642,
+      "error_among_decided_pct": 28.52311161,
+      "decided_wrong": 253,
+      "decided": 887
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 98.69281046,
+      "recall_pct": 80.65359477,
+      "decided_pct": 56.92810458,
+      "error_among_decided_pct": 15.15499426,
+      "decided_wrong": 132,
+      "decided": 871
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 83.69426752,
+      "recall_pct": 64.26751592,
+      "decided_pct": 48.47133758,
+      "error_among_decided_pct": 22.60183968,
+      "decided_wrong": 172,
+      "decided": 761
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.74358974,
+      "recall_pct": 99.23076923,
+      "decided_pct": 94.1025641,
+      "error_among_decided_pct": 0.13623978,
+      "decided_wrong": 1,
+      "decided": 734
+     }
+    },
+    "mnv3l": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 92.40740741,
+      "recall_pct": 64.56790123,
+      "decided_pct": 43.02469136,
+      "error_among_decided_pct": 23.24246772,
+      "decided_wrong": 162,
+      "decided": 697
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 96.8627451,
+      "recall_pct": 75.88235294,
+      "decided_pct": 39.86928105,
+      "error_among_decided_pct": 19.01639344,
+      "decided_wrong": 116,
+      "decided": 610
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 83.43949045,
+      "recall_pct": 66.87898089,
+      "decided_pct": 39.61783439,
+      "error_among_decided_pct": 15.4340836,
+      "decided_wrong": 96,
+      "decided": 622
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.48717949,
+      "recall_pct": 97.17948718,
+      "decided_pct": 84.74358974,
+      "error_among_decided_pct": 0.90771558,
+      "decided_wrong": 6,
+      "decided": 661
+     }
+    },
+    "mnv4m": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 90.24691358,
+      "recall_pct": 57.5308642,
+      "decided_pct": 51.2345679,
+      "error_among_decided_pct": 32.40963855,
+      "decided_wrong": 269,
+      "decided": 830
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 98.10457516,
+      "recall_pct": 69.54248366,
+      "decided_pct": 53.79084967,
+      "error_among_decided_pct": 24.30133657,
+      "decided_wrong": 200,
+      "decided": 823
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 81.52866242,
+      "recall_pct": 64.26751592,
+      "decided_pct": 52.22929936,
+      "error_among_decided_pct": 23.29268293,
+      "decided_wrong": 191,
+      "decided": 820
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 97.82051282,
+      "recall_pct": 95.8974359,
+      "decided_pct": 87.94871795,
+      "error_among_decided_pct": 2.33236152,
+      "decided_wrong": 16,
+      "decided": 686
+     }
+    },
+    "cnxv2t": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 98.27160494,
+      "recall_pct": 87.22222222,
+      "decided_pct": 89.38271605,
+      "error_among_decided_pct": 9.25414365,
+      "decided_wrong": 134,
+      "decided": 1448
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 97.77777778,
+      "recall_pct": 77.58169935,
+      "decided_pct": 80.8496732,
+      "error_among_decided_pct": 19.88682296,
+      "decided_wrong": 246,
+      "decided": 1237
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 93.12101911,
+      "recall_pct": 74.20382166,
+      "decided_pct": 78.15286624,
+      "error_among_decided_pct": 18.98940505,
+      "decided_wrong": 233,
+      "decided": 1227
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.61538462,
+      "recall_pct": 99.1025641,
+      "decided_pct": 98.97435897,
+      "error_among_decided_pct": 0.38860104,
+      "decided_wrong": 3,
+      "decided": 772
+     }
+    },
+    "vits": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 97.22222222,
+      "recall_pct": 81.91358025,
+      "decided_pct": 84.81481481,
+      "error_among_decided_pct": 13.75545852,
+      "decided_wrong": 189,
+      "decided": 1374
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 96.33986928,
+      "recall_pct": 76.40522876,
+      "decided_pct": 75.35947712,
+      "error_among_decided_pct": 19.16738942,
+      "decided_wrong": 221,
+      "decided": 1153
+     },
+     "Phomopsis": {
+      "n": 1570,
+      "top2_pct": 93.50318471,
+      "recall_pct": 82.61146497,
+      "decided_pct": 78.59872611,
+      "error_among_decided_pct": 12.23662885,
+      "decided_wrong": 151,
+      "decided": 1234
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 100.0,
+      "recall_pct": 100.0,
+      "decided_pct": 99.74358974,
+      "error_among_decided_pct": 0.0,
+      "decided_wrong": 0,
+      "decided": 778
+     }
+    }
+   }
   }
  },
  "novid": {
@@ -2715,6 +3101,392 @@
      }
     }
    }
+  },
+  "class_breakdown": {
+   "90": {
+    "effb0": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 92.83950617,
+      "recall_pct": 63.88888889,
+      "decided_pct": 61.11111111,
+      "error_among_decided_pct": 29.39393939,
+      "decided_wrong": 291,
+      "decided": 990
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 98.69281046,
+      "recall_pct": 80.65359477,
+      "decided_pct": 63.00653595,
+      "error_among_decided_pct": 16.90871369,
+      "decided_wrong": 163,
+      "decided": 964
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 74.04255319,
+      "recall_pct": 42.87234043,
+      "decided_pct": 35.42553191,
+      "error_among_decided_pct": 54.05405405,
+      "decided_wrong": 180,
+      "decided": 333
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.74358974,
+      "recall_pct": 99.23076923,
+      "decided_pct": 94.35897436,
+      "error_among_decided_pct": 0.13586957,
+      "decided_wrong": 1,
+      "decided": 736
+     }
+    },
+    "mnv3l": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 92.40740741,
+      "recall_pct": 64.56790123,
+      "decided_pct": 54.56790123,
+      "error_among_decided_pct": 28.16742081,
+      "decided_wrong": 249,
+      "decided": 884
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 96.8627451,
+      "recall_pct": 75.88235294,
+      "decided_pct": 52.94117647,
+      "error_among_decided_pct": 21.11111111,
+      "decided_wrong": 171,
+      "decided": 810
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 72.65957447,
+      "recall_pct": 46.27659574,
+      "decided_pct": 38.93617021,
+      "error_among_decided_pct": 42.89617486,
+      "decided_wrong": 157,
+      "decided": 366
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.48717949,
+      "recall_pct": 97.17948718,
+      "decided_pct": 86.66666667,
+      "error_among_decided_pct": 1.18343195,
+      "decided_wrong": 8,
+      "decided": 676
+     }
+    },
+    "mnv4m": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 90.24691358,
+      "recall_pct": 57.5308642,
+      "decided_pct": 55.80246914,
+      "error_among_decided_pct": 34.18141593,
+      "decided_wrong": 309,
+      "decided": 904
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 98.10457516,
+      "recall_pct": 69.54248366,
+      "decided_pct": 58.30065359,
+      "error_among_decided_pct": 25.89686099,
+      "decided_wrong": 231,
+      "decided": 892
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 69.36170213,
+      "recall_pct": 43.82978723,
+      "decided_pct": 42.65957447,
+      "error_among_decided_pct": 52.61845387,
+      "decided_wrong": 211,
+      "decided": 401
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 97.82051282,
+      "recall_pct": 95.8974359,
+      "decided_pct": 90.12820513,
+      "error_among_decided_pct": 2.27596017,
+      "decided_wrong": 16,
+      "decided": 703
+     }
+    },
+    "cnxv2t": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 98.27160494,
+      "recall_pct": 87.22222222,
+      "decided_pct": 91.35802469,
+      "error_among_decided_pct": 9.93243243,
+      "decided_wrong": 147,
+      "decided": 1480
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 97.77777778,
+      "recall_pct": 77.58169935,
+      "decided_pct": 88.36601307,
+      "error_among_decided_pct": 20.26627219,
+      "decided_wrong": 274,
+      "decided": 1352
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 89.04255319,
+      "recall_pct": 58.40425532,
+      "decided_pct": 81.38297872,
+      "error_among_decided_pct": 38.30065359,
+      "decided_wrong": 293,
+      "decided": 765
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.61538462,
+      "recall_pct": 99.1025641,
+      "decided_pct": 99.1025641,
+      "error_among_decided_pct": 0.51746442,
+      "decided_wrong": 4,
+      "decided": 773
+     }
+    },
+    "vits": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 97.22222222,
+      "recall_pct": 81.91358025,
+      "decided_pct": 89.07407407,
+      "error_among_decided_pct": 14.27581428,
+      "decided_wrong": 206,
+      "decided": 1443
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 96.33986928,
+      "recall_pct": 76.40522876,
+      "decided_pct": 85.4248366,
+      "error_among_decided_pct": 20.50497322,
+      "decided_wrong": 268,
+      "decided": 1307
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 89.25531915,
+      "recall_pct": 71.70212766,
+      "decided_pct": 80.85106383,
+      "error_among_decided_pct": 24.34210526,
+      "decided_wrong": 185,
+      "decided": 760
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 100.0,
+      "recall_pct": 100.0,
+      "decided_pct": 99.87179487,
+      "error_among_decided_pct": 0.0,
+      "decided_wrong": 0,
+      "decided": 779
+     }
+    }
+   },
+   "95": {
+    "effb0": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 92.83950617,
+      "recall_pct": 63.88888889,
+      "decided_pct": 50.0617284,
+      "error_among_decided_pct": 28.85326757,
+      "decided_wrong": 234,
+      "decided": 811
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 98.69281046,
+      "recall_pct": 80.65359477,
+      "decided_pct": 51.30718954,
+      "error_among_decided_pct": 11.59235669,
+      "decided_wrong": 91,
+      "decided": 785
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 74.04255319,
+      "recall_pct": 42.87234043,
+      "decided_pct": 29.89361702,
+      "error_among_decided_pct": 55.87188612,
+      "decided_wrong": 157,
+      "decided": 281
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.74358974,
+      "recall_pct": 99.23076923,
+      "decided_pct": 93.46153846,
+      "error_among_decided_pct": 0.13717421,
+      "decided_wrong": 1,
+      "decided": 729
+     }
+    },
+    "mnv3l": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 92.40740741,
+      "recall_pct": 64.56790123,
+      "decided_pct": 34.62962963,
+      "error_among_decided_pct": 22.10338681,
+      "decided_wrong": 124,
+      "decided": 561
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 96.8627451,
+      "recall_pct": 75.88235294,
+      "decided_pct": 35.16339869,
+      "error_among_decided_pct": 14.12639405,
+      "decided_wrong": 76,
+      "decided": 538
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 72.65957447,
+      "recall_pct": 46.27659574,
+      "decided_pct": 26.38297872,
+      "error_among_decided_pct": 35.48387097,
+      "decided_wrong": 88,
+      "decided": 248
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.48717949,
+      "recall_pct": 97.17948718,
+      "decided_pct": 82.56410256,
+      "error_among_decided_pct": 0.93167702,
+      "decided_wrong": 6,
+      "decided": 644
+     }
+    },
+    "mnv4m": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 90.24691358,
+      "recall_pct": 57.5308642,
+      "decided_pct": 41.85185185,
+      "error_among_decided_pct": 35.39823009,
+      "decided_wrong": 240,
+      "decided": 678
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 98.10457516,
+      "recall_pct": 69.54248366,
+      "decided_pct": 46.33986928,
+      "error_among_decided_pct": 18.89985896,
+      "decided_wrong": 134,
+      "decided": 709
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 69.36170213,
+      "recall_pct": 43.82978723,
+      "decided_pct": 34.36170213,
+      "error_among_decided_pct": 49.53560372,
+      "decided_wrong": 160,
+      "decided": 323
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 97.82051282,
+      "recall_pct": 95.8974359,
+      "decided_pct": 87.17948718,
+      "error_among_decided_pct": 2.05882353,
+      "decided_wrong": 14,
+      "decided": 680
+     }
+    },
+    "cnxv2t": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 98.27160494,
+      "recall_pct": 87.22222222,
+      "decided_pct": 88.20987654,
+      "error_among_decided_pct": 8.8873338,
+      "decided_wrong": 127,
+      "decided": 1429
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 97.77777778,
+      "recall_pct": 77.58169935,
+      "decided_pct": 79.01960784,
+      "error_among_decided_pct": 19.60297767,
+      "decided_wrong": 237,
+      "decided": 1209
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 89.04255319,
+      "recall_pct": 58.40425532,
+      "decided_pct": 66.91489362,
+      "error_among_decided_pct": 34.34022258,
+      "decided_wrong": 216,
+      "decided": 629
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 99.61538462,
+      "recall_pct": 99.1025641,
+      "decided_pct": 98.71794872,
+      "error_among_decided_pct": 0.38961039,
+      "decided_wrong": 3,
+      "decided": 770
+     }
+    },
+    "vits": {
+     "Algal": {
+      "n": 1620,
+      "top2_pct": 97.22222222,
+      "recall_pct": 81.91358025,
+      "decided_pct": 79.56790123,
+      "error_among_decided_pct": 12.33514352,
+      "decided_wrong": 159,
+      "decided": 1289
+     },
+     "Leaf_rot": {
+      "n": 1530,
+      "top2_pct": 96.33986928,
+      "recall_pct": 76.40522876,
+      "decided_pct": 71.50326797,
+      "error_among_decided_pct": 18.82998172,
+      "decided_wrong": 206,
+      "decided": 1094
+     },
+     "Phomopsis": {
+      "n": 940,
+      "top2_pct": 89.25531915,
+      "recall_pct": 71.70212766,
+      "decided_pct": 68.08510638,
+      "error_among_decided_pct": 22.1875,
+      "decided_wrong": 142,
+      "decided": 640
+     },
+     "Root_disease": {
+      "n": 780,
+      "top2_pct": 100.0,
+      "recall_pct": 100.0,
+      "decided_pct": 99.74358974,
+      "error_among_decided_pct": 0.0,
+      "decided_wrong": 0,
+      "decided": 778
+     }
+    }
+   }
   }
  },
  "unsplit": {
@@ -2801,6 +3573,134 @@
     "post_within_2pp": 0.07052504,
     "min_half_width_inf_repeats": 5.95078928,
     "p_holm": 0.14927022
+   }
+  }
+ },
+ "strict": {
+  "test_n_mean": 87.0,
+  "val_n_mean": 34.2,
+  "val_n_mean_orig": 34.75,
+  "macro_f1": {
+   "effb0": 66.9950054,
+   "mnv3l": 63.2514944,
+   "mnv4m": 56.86708898,
+   "cnxv2t": 74.03639149,
+   "vits": 73.81765172
+  },
+  "curves": {
+   "effb0": {
+    "acc": 76.99585581,
+    "aurc": 10.57192774,
+    "top2": 95.54486588,
+    "acc_at_70": 84.88704473
+   },
+   "mnv3l": {
+    "acc": 74.35781617,
+    "aurc": 12.62669176,
+    "top2": 94.30597676,
+    "acc_at_70": 83.84831767
+   },
+   "mnv4m": {
+    "acc": 68.71202374,
+    "aurc": 16.83049981,
+    "top2": 93.8502331,
+    "acc_at_70": 78.25103505
+   },
+   "cnxv2t": {
+    "acc": 86.78544418,
+    "aurc": 4.21284256,
+    "top2": 97.44354669,
+    "acc_at_70": 94.07365578
+   },
+   "vits": {
+    "acc": 85.2106629,
+    "aurc": 4.54081529,
+    "top2": 96.667826,
+    "acc_at_70": 93.81525217
+   }
+  },
+  "sel90": {
+   "effb0": {
+    "coverage": 69.29043589,
+    "sel_acc_mean_of_runs": 84.94037032,
+    "sel_acc_pooled": 82.97533811,
+    "runs_below_target": 20,
+    "runs_with_accepted": 39,
+    "runs_all_accepted": 3
+   },
+   "mnv3l": {
+    "coverage": 57.19175682,
+    "sel_acc_mean_of_runs": 84.55774632,
+    "sel_acc_pooled": 81.41176471,
+    "runs_below_target": 24,
+    "runs_with_accepted": 38,
+    "runs_all_accepted": 2
+   },
+   "mnv4m": {
+    "coverage": 61.41038312,
+    "sel_acc_mean_of_runs": 79.90896535,
+    "sel_acc_pooled": 77.55013078,
+    "runs_below_target": 29,
+    "runs_with_accepted": 38,
+    "runs_all_accepted": 1
+   },
+   "cnxv2t": {
+    "coverage": 89.81919729,
+    "sel_acc_mean_of_runs": 90.00741371,
+    "sel_acc_pooled": 89.72431078,
+    "runs_below_target": 14,
+    "runs_with_accepted": 40,
+    "runs_all_accepted": 8
+   },
+   "vits": {
+    "coverage": 88.31227885,
+    "sel_acc_mean_of_runs": 89.21820229,
+    "sel_acc_pooled": 89.63763509,
+    "runs_below_target": 18,
+    "runs_with_accepted": 40,
+    "runs_all_accepted": 10
+   }
+  },
+  "sel95": {
+   "effb0": {
+    "coverage": 57.1356308,
+    "sel_acc_mean_of_runs": 88.80001496,
+    "sel_acc_pooled": 86.25989753,
+    "runs_below_target": 28,
+    "runs_with_accepted": 39,
+    "runs_all_accepted": 2
+   },
+   "mnv3l": {
+    "coverage": 43.27236769,
+    "sel_acc_mean_of_runs": 90.35122637,
+    "sel_acc_pooled": 88.77419355,
+    "runs_below_target": 19,
+    "runs_with_accepted": 37,
+    "runs_all_accepted": 0
+   },
+   "mnv4m": {
+    "coverage": 48.80645085,
+    "sel_acc_mean_of_runs": 83.99599757,
+    "sel_acc_pooled": 81.68635875,
+    "runs_below_target": 28,
+    "runs_with_accepted": 38,
+    "runs_all_accepted": 1
+   },
+   "cnxv2t": {
+    "coverage": 84.75457441,
+    "sel_acc_mean_of_runs": 91.0642087,
+    "sel_acc_pooled": 90.35830619,
+    "runs_below_target": 28,
+    "runs_with_accepted": 40,
+    "runs_all_accepted": 7
+   },
+   "vits": {
+    "coverage": 76.94423309,
+    "sel_acc_mean_of_runs": 92.27027385,
+    "sel_acc_pooled": 91.80851064,
+    "runs_below_target": 24,
+    "runs_with_accepted": 40,
+    "runs_all_accepted": 6
    }
   }
  },

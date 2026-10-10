@@ -80,7 +80,6 @@ checks += [
     ('abstract holm', f"p = {r(cn['p_holm'], 3)} and {r(vt['p_holm'], 3)}"),
     ('abstract time', f"{r(V['cost']['vits']['cpu_ms_1thr_median'] / V['cost']['effb0']['cpu_ms_1thr_median'], 1)} to {r(V['cost']['cnxv2t']['cpu_ms_1thr_median'] / V['cost']['effb0']['cpu_ms_1thr_median'], 1)} times the CPU time"),
     ('abstract 70', f"{r(NV['aurc_top2']['cnxv2t']['acc_at_70'], 1)}\\% accurate on its 70\\% most confident images"),
-    ('abstract top2', f"correct class for {r(NV['aurc_top2']['cnxv2t']['top2'][0], 1)}\\%"),
     ('abstract cov', f"decided {r(NV['selective']['90']['cnxv2t']['coverage'][0], 0)}\\% of images with {r(NV['selective']['90']['cnxv2t']['sel_acc_mean_of_runs'][0], 0)}\\% accuracy"),
     ('cnx diff', f"{sm(cn['mean'])} points for ConvNeXt V2-Tiny (95\\% CI {r(cn['ci_low'])} to {r(cn['ci_high'])})"),
     ('vit diff', f"{sm(vt['mean'])} points for ViT-S/16 ({um(vt['ci_low'])} to {r(vt['ci_high'])})"),
@@ -93,7 +92,7 @@ checks += [
     ('seeds', f"{r(NV['seed_abs_by_config']['cnxv2t'])} points for ConvNeXt V2-Tiny and {r(NV['seed_abs_by_config']['vits'])} for ViT-S/16, against {r(NV['seed_abs_by_config']['effb0'])} for EfficientNet-B0, {r(NV['seed_abs_by_config']['mnv3l'])} for MobileNetV3-Large and {r(NV['seed_abs_by_config']['mnv4m'])} for MobileNetV4-Conv-Medium"),
     ('rerun', f"({r(V['rerun_agreement']['novid']['here'])}\\% against {r(V['rerun_agreement']['novid']['first'])}\\%), but matching runs differed by {r(V['rerun_agreement']['novid']['mean_abs_diff'])} points on average (correlation {r(V['rerun_agreement']['novid']['corr'])})"),
     ('fold range cnx', f"{r(min(NV['fold_macro_f1']['cnxv2t']), 1)}\\% to {r(max(NV['fold_macro_f1']['cnxv2t']), 1)}\\% for ConvNeXt V2-Tiny and from {r(min(NV['fold_macro_f1']['vits']), 1)}\\% to {r(max(NV['fold_macro_f1']['vits']), 1)}\\% for ViT-S/16"),
-    ('min hw', f"smaller than {r(cn['min_half_width_inf_repeats'])} and {r(vt['min_half_width_inf_repeats'])} points"),
+    ('min hw', f"$\\pm {r(cn['min_half_width_inf_repeats'])}$ and $\\pm {r(vt['min_half_width_inf_repeats'])}$ points"),
     ('params', f"{r(V['cost']['cnxv2t']['params_M'])} million parameters and ViT-S/16 {r(V['cost']['vits']['params_M'])} million"),
     ('lat', f"was {r(V['cost']['cnxv2t']['cpu_ms_1thr_median'], 1)} and {r(V['cost']['vits']['cpu_ms_1thr_median'], 1)}\\,ms"),
     ('lat p90', f"(90th percentile {r(V['cost']['cnxv2t']['cpu_ms_1thr_p90'], 1)} and {r(V['cost']['vits']['cpu_ms_1thr_p90'], 1)}\\,ms)"),
@@ -152,7 +151,26 @@ checks += [
 assert round(x90['cnxv2t']['sel_acc_mean_of_runs'][0]) == 86 and round(x90['vits']['sel_acc_mean_of_runs'][0]) == 86
 assert V['novid']['aurc_top2']['cnxv2t']['acc_at_70'] > 90 and V['novid']['aurc_top2']['vits']['acc_at_70'] > 90
 
-bad = [(k, v) for k, v in checks if v not in TEX]
+# 4. strict subset (Table 4 in the manuscript) and per-class referral figures quoted in the text
+ST = V['strict']
+CB = NV['class_breakdown']['90']
+e_, c_, v_ = 'effb0', 'cnxv2t', 'vits'
+S90 = NV['selective']['90']
+checks.append(('strict row F1', f"Macro F1 (\\%) & {r(NV['summary'][e_]['mean'], 1)} & {r(NV['summary'][c_]['mean'], 1)} & {r(NV['summary'][v_]['mean'], 1)} & {r(ST['macro_f1'][e_], 1)} & {r(ST['macro_f1'][c_], 1)} & {r(ST['macro_f1'][v_], 1)}"))
+checks.append(('strict row acc70', f"Accuracy on the 70\\% most confident (\\%) & {r(NV['aurc_top2'][e_]['acc_at_70'], 1)} & {r(NV['aurc_top2'][c_]['acc_at_70'], 1)} & {r(NV['aurc_top2'][v_]['acc_at_70'], 1)} & {r(ST['curves'][e_]['acc_at_70'], 1)} & {r(ST['curves'][c_]['acc_at_70'], 1)} & {r(ST['curves'][v_]['acc_at_70'], 1)}"))
+checks.append(('strict row decided', f"Images decided at the 90\\% target (\\%) & {r(S90[e_]['coverage'][0], 1)} & {r(S90[c_]['coverage'][0], 1)} & {r(S90[v_]['coverage'][0], 1)} & {r(ST['sel90'][e_]['coverage'], 1)} & {r(ST['sel90'][c_]['coverage'], 1)} & {r(ST['sel90'][v_]['coverage'], 1)}"))
+checks.append(('strict row below', 'Runs below 90\\% on decided images & ' + ' & '.join(f"{S90[c]['runs_below_target']}/{S90[c]['runs_with_accepted']}" for c in (e_, c_, v_)) + ' & ' + ' & '.join(f"{ST['sel90'][c]['runs_below_target']}/{ST['sel90'][c]['runs_with_accepted']}" for c in (e_, c_, v_))))
+checks.append(('strict subset n', f"({r(ST['test_n_mean'], 1)} images per run), with validation images for the referral threshold screened in the same way ({r(ST['val_n_mean'], 1)} against {r(ST['val_n_mean_orig'], 1)} images per run)"))
+checks.append(('strict text below', f"was still below 90\\% in {ST['sel90'][c_]['runs_below_target']} and {ST['sel90'][v_]['runs_below_target']} of 40 runs"))
+checks.append(('class top2 phom', f"{r(CB[c_]['Phomopsis']['top2_pct'], 1)}\\% and {r(CB[v_]['Phomopsis']['top2_pct'], 1)}\\% of \\emph{{Phomopsis}} images"))
+checks.append(('class err', f"was {r(CB[c_]['Phomopsis']['error_among_decided_pct'], 1)}\\% (ConvNeXt V2-Tiny) and {r(CB[v_]['Phomopsis']['error_among_decided_pct'], 1)}\\% (ViT-S/16) for \\emph{{Phomopsis}}, {r(CB[c_]['Leaf_rot']['error_among_decided_pct'], 1)}\\% and {r(CB[v_]['Leaf_rot']['error_among_decided_pct'], 1)}\\% for leaf blight, {r(CB[c_]['Algal']['error_among_decided_pct'], 1)}\\% and {r(CB[v_]['Algal']['error_among_decided_pct'], 1)}\\% for algal leaf spot"))
+assert all(CB[c]['Root_disease']['error_among_decided_pct'] < 1 for c in (c_, v_))
+
+# 5. phrases that overstated the evidence must not come back
+for ph in ['from the start', 'would have worked', 'cannot be detected', 'alone raised macro F1', 'almost any macro F1']:
+    checks.append((f'absent: {ph}', None))
+
+bad = [(k, v) for k, v in checks if (v in TEX if v is None and False else (v is not None and v not in TEX) or (v is None and k[8:] in TEX))]
 for k, v in bad:
     print(f'MISSING  {k}: {v}')
 print(f'{len(checks) - len(bad)}/{len(checks)} checks passed')
