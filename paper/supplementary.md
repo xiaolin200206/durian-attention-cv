@@ -1,6 +1,6 @@
 ---
 title: "Supplementary material"
-subtitle: "Decision support for durian disease diagnosis from field photographs: grouped validation, backbone choice and referral to the grower"
+subtitle: "Decision support for durian (*Durio zibethinus*) disease diagnosis from field photographs: what grouped validation shows about backbone choice and referral"
 author: "Lin Ding Shan (Independent researcher, Malaysia)"
 header-includes: \renewcommand{\thefigure}{S\arabic{figure}}
 ---

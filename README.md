@@ -54,11 +54,11 @@ No attention module, insertion point or input size met the decision rule (gain �
 | `paper/make_figures.py` | Figures of the paper → `paper/figures/` (example photographs in `paper/figures/examples/`) |
 | `paper/compute_numbers_v3.py` | Every number of the backbone and referral experiment, under both scorings (also needs `common.py`, hence torch, for the video-linked sensitivity analysis) → `paper/numbers_v3.json` |
 | `paper/make_figures_v3.py` | Backbone and referral figures → `paper/figures/fig5_backbones`, `fig6_decision` |
-| `paper/make_supplement.py` | Supplementary Tables S1–S18 and Figs. S1–S2 → `paper/supplementary.md` / `.docx` / `.pdf` (`--blind` writes an anonymised copy) |
+| `paper/make_supplement.py` | Supplementary Tables S1–S20 and Figs. S1–S2 → `paper/supplementary.md` / `.docx` / `.pdf` (`--blind` writes an anonymised copy) |
 | `paper/check_numbers.py`, `paper/check_numbers_v3.py` | Check every computed number quoted in a manuscript `.tex` file against `paper/numbers.json`, `paper/numbers_v3.json` and the result files; fail, naming the item, on any disagreement |
 | `data/` | `sessions.csv` (class, file name and capture session for all 560 released images) and `folds.csv` (the fold assignment used) |
 | `notebooks/` | The Colab notebooks that produced the reported runs |
-| `results/` | Raw outputs: `results.csv` (one row per run), `preds.csv` (every test prediction), `latency_params.csv`, `external_vietnam.csv`, `ablation_replicates_preliminary.csv`, and derived files; `results/v2/` holds the follow-up experiment and `results/v3/` the backbone and referral experiment (`results.csv`, `preds.csv` with the validation and test probabilities of every run, `cost.csv`, `versions.txt`), each with the `PREREG.md` written before its runs |
+| `results/` | Raw outputs: `results.csv` (one row per run), `preds.csv` (every test prediction), `latency_params.csv`, `external_vietnam.csv`, `ablation_replicates_preliminary.csv` (an early pilot of 32 runs on an image-level split with one seed, kept for the record; it motivated the grouped design and is not used anywhere in the paper), and derived files; `results/v2/` holds the follow-up experiment and `results/v3/` the backbone and referral experiment (`results.csv`, `preds.csv` with the validation and test probabilities of every run, `cost.csv`, `versions.txt`), each with the `PREREG.md` written before its runs |
 | `figures/` | Figures written by `analyze.py` and `make_fig1.py` |
 
 ## Data

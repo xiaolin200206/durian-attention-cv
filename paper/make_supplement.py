@@ -60,7 +60,7 @@ def ttest_block(d, ntr, nte):
     return d.mean(), d.mean() - h, d.mean() + h, 2 * stats.t.sf(abs(d.mean() / se), J - 1)
 
 
-TITLE = 'Decision support for durian disease diagnosis from field photographs: grouped validation, backbone choice and referral to the grower'
+TITLE = 'Decision support for durian (*Durio zibethinus*) disease diagnosis from field photographs: what grouped validation shows about backbone choice and referral'
 BLIND = '--blind' in sys.argv      # anonymised copy for double-anonymised review
 STEM = 'supplementary_blind' if BLIND else 'supplementary'
 
